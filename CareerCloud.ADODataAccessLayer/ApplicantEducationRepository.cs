@@ -1,13 +1,10 @@
 ﻿using CareerCloud.DataAccessLayer;
 using CareerCloud.Pocos;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace CareerCloud.ADODataAccessLayer
 {
@@ -109,7 +106,7 @@ namespace CareerCloud.ADODataAccessLayer
                 cmd.Connection = conn;
                 foreach (ApplicantEducationPoco item in items)
                 {
-                    cmd.CommandText = @"DELETE FROM[dbo].[Applicant_Educations]
+                    cmd.CommandText = @"DELETE FROM [dbo].[Applicant_Educations]
                                         WHERE [Id] = @Id";
                     cmd.Parameters.AddWithValue("@Id", item.Id);
                     conn.Open();
