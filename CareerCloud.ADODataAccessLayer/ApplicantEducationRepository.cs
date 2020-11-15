@@ -27,7 +27,7 @@ namespace CareerCloud.ADODataAccessLayer
                                    ,[Completion_Date]
                                    ,[Completion_Percent])
                              VALUES
-                                   (@Id, 
+                                   (@Id 
                                    ,@Applicant
                                    ,@Major
                                    ,@CertificateDiploma
@@ -77,7 +77,7 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.StartDate = rdr.IsDBNull(4) ? (DateTime?) null : rdr.GetDateTime(4);
                     poco.CompletionDate = (DateTime?)rdr.GetSqlValue(5);  // we can also use the syntax used for StartDate
                     poco.CompletionPercent = (byte?)rdr[6]; //another way
-                    poco.TimeStamp = (byte[])rdr["TimeStamp"]; //you can also use the column name
+                    poco.TimeStamp = (byte[])rdr["Time_Stamp"]; //you can also use the column name
                     pocos[counter] = poco;
                     counter++;
                 }
@@ -127,10 +127,10 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.CommandText = @"UPDATE [dbo].[Applicant_Educations]
                                        SET [Applicant] = @Applicant
                                         ,[Major] = @Major
-                                        ,[Certificate_Diploma] = @Certificate_Diploma
-                                        ,[Start_Date] = @Start_Date
-                                        ,[Completion_Date] = @Completion_Date
-                                        ,[Completion_Percent] = @Completion_Percent
+                                        ,[Certificate_Diploma] = @CertificateDiploma
+                                        ,[Start_Date] = @StartDate
+                                        ,[Completion_Date] = @CompletionDate
+                                        ,[Completion_Percent] = @CompletionPercent
                                        WHERE [Id] = @Id";
                     cmd.Parameters.AddWithValue("@Id", item.Id);
                     cmd.Parameters.AddWithValue("@Applicant", item.Applicant);
