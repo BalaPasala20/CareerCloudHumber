@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CareerCloud.Pocos", "CareerCloud.Pocos\CareerCloud.Pocos.csproj", "{00F77D60-9E35-4E67-9436-25BAB0461462}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerCloud.DataAccessLayer", "CareerCloud.DataAccessLayer\CareerCloud.DataAccessLayer.csproj", "{6237652A-0A1C-4AEB-A9F6-E9C4BE44C39B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CareerCloud.ADODataAccessLayer", "CareerCloud.ADODataAccessLayer\CareerCloud.ADODataAccessLayer.csproj", "{B79188B2-15F9-4ED7-ABE2-B2703991D015}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{00F77D60-9E35-4E67-9436-25BAB0461462}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00F77D60-9E35-4E67-9436-25BAB0461462}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00F77D60-9E35-4E67-9436-25BAB0461462}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6237652A-0A1C-4AEB-A9F6-E9C4BE44C39B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6237652A-0A1C-4AEB-A9F6-E9C4BE44C39B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6237652A-0A1C-4AEB-A9F6-E9C4BE44C39B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6237652A-0A1C-4AEB-A9F6-E9C4BE44C39B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B79188B2-15F9-4ED7-ABE2-B2703991D015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B79188B2-15F9-4ED7-ABE2-B2703991D015}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B79188B2-15F9-4ED7-ABE2-B2703991D015}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B79188B2-15F9-4ED7-ABE2-B2703991D015}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
