@@ -117,9 +117,9 @@ namespace CareerCloud.ADODataAccessLayer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                foreach (ApplicantJobApplicationPoco item in items)
+                foreach (ApplicantProfilePoco item in items)
                 {
-                    cmd.CommandText = @"DELETE FROM [dbo].[Applicant_Job_Applications]
+                    cmd.CommandText = @"DELETE FROM [dbo].[Applicant_Profiles]
                                         WHERE [Id] = @Id";
                     cmd.Parameters.AddWithValue("@Id", item.Id);
                     conn.Open();
@@ -135,18 +135,30 @@ namespace CareerCloud.ADODataAccessLayer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                foreach (ApplicantJobApplicationPoco item in items)
+                foreach (ApplicantProfilePoco item in items)
                 {
-                    cmd.CommandText = @"UPDATE [dbo].[Applicant_Job_Applications]
-                                       SET [Id] = @Id
-                                          ,[Applicant] = @Applicant
-                                          ,[Job] = @Job
-                                          ,[Application_Date] = @ApplicationDate
+                    cmd.CommandText = @"UPDATE [dbo].[Applicant_Profiles]
+                                        SET [Login] = @Login
+                                            ,[Current_Salary] = @CurrentSalary
+                                            ,[Current_Rate] = @CurrentRate
+                                            ,[Currency] = @Currency
+                                            ,[Country_Code] = @CountryCode
+                                            ,[State_Province_Code] = @StateProvinceCode
+                                            ,[Street_Address] = @StreetAddress
+                                            ,[City_Town] = @CityTown
+                                            ,[Zip_Postal_Code] = @ZipPostalCode
                                        WHERE [Id] = @Id";
+
                     cmd.Parameters.AddWithValue("@Id", item.Id);
-                    cmd.Parameters.AddWithValue("@Applicant", item.Applicant);
-                    cmd.Parameters.AddWithValue("@Job", item.Job);
-                    cmd.Parameters.AddWithValue("@ApplicationDate", item.ApplicationDate);
+                    cmd.Parameters.AddWithValue("@Login", item.Login);
+                    cmd.Parameters.AddWithValue("@CurrentSalary", item.CurrentSalary);
+                    cmd.Parameters.AddWithValue("@CurrentRate", item.CurrentRate);
+                    cmd.Parameters.AddWithValue("@Currency", item.Currency);
+                    cmd.Parameters.AddWithValue("@CountryCode", item.Country);
+                    cmd.Parameters.AddWithValue("@StateProvinceCode", item.Province);
+                    cmd.Parameters.AddWithValue("@StreetAddress", item.Street);
+                    cmd.Parameters.AddWithValue("@CityTown", item.City);
+                    cmd.Parameters.AddWithValue("@ZipPostalCode", item.PostalCode);
 
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
