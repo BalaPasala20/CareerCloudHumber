@@ -19,42 +19,51 @@ namespace CareerCloud.ADODataAccessLayer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                foreach (ApplicantProfilePoco item in items)
+                foreach (SecurityLoginPoco item in items)
                 {
-                    cmd.CommandText = @"INSERT INTO [dbo].[Applicant_Profiles]
+                    cmd.CommandText = @"INSERT INTO [dbo].[Security_Logins]
                                        ([Id]
                                        ,[Login]
-                                       ,[Current_Salary]
-                                       ,[Current_Rate]
-                                       ,[Currency]
-                                       ,[Country_Code]
-                                       ,[State_Province_Code]
-                                       ,[Street_Address]
-                                       ,[City_Town]
-                                       ,[Zip_Postal_Code])
-                                       VALUES
+                                       ,[Password]
+                                       ,[Created_Date]
+                                       ,[Password_Update_Date]
+                                       ,[Agreement_Accepted_Date]
+                                       ,[Is_Locked]
+                                       ,[Is_Inactive]
+                                       ,[Email_Address]
+                                       ,[Phone_Number]
+                                       ,[Full_Name]
+                                       ,[Force_Change_Password]
+                                       ,[Prefferred_Language])
+                                 VALUES
                                        (@Id
                                        ,@Login
-                                       ,@CurrentSalary
-                                       ,@CurrentRate
-                                       ,@Currency
-                                       ,@CountryCode
-                                       ,@StateProvinceCode
-                                       ,@StreetAddress
-                                       ,@CityTown
-                                       ,@ZipPostalCode)";
+                                       ,@Password
+                                       ,@CreatedDate
+                                       ,@PasswordUpdateDate
+                                       ,@AgreementAcceptedDate
+                                       ,@IsLocked
+                                       ,@IsInactive
+                                       ,@EmailAddress
+                                       ,@PhoneNumber
+                                       ,@FullName
+                                       ,@ForceChangePassword
+                                       ,@PrefferredLanguage)";
 
                     cmd.Parameters.AddWithValue("@Id", item.Id);
                     cmd.Parameters.AddWithValue("@Login", item.Login);
-                    cmd.Parameters.AddWithValue("@CurrentSalary", item.CurrentSalary);
-                    cmd.Parameters.AddWithValue("@CurrentRate", item.CurrentRate);
-                    cmd.Parameters.AddWithValue("@Currency", item.Currency);
-                    cmd.Parameters.AddWithValue("@CountryCode", item.Country);
-                    cmd.Parameters.AddWithValue("@StateProvinceCode", item.Province);
-                    cmd.Parameters.AddWithValue("@StreetAddress", item.Street);
-                    cmd.Parameters.AddWithValue("@CityTown", item.City);
-                    cmd.Parameters.AddWithValue("@ZipPostalCode", item.PostalCode);
-
+                    cmd.Parameters.AddWithValue("@Password", item.Password);
+                    cmd.Parameters.AddWithValue("@CreatedDate", item.Created);
+                    cmd.Parameters.AddWithValue("@PasswordUpdateDate", item.PasswordUpdate);
+                    cmd.Parameters.AddWithValue("@AgreementAcceptedDate", item.AgreementAccepted);
+                    cmd.Parameters.AddWithValue("@IsLocked", item.IsLocked);
+                    cmd.Parameters.AddWithValue("@IsInactive", item.IsInactive);
+                    cmd.Parameters.AddWithValue("@EmailAddress", item.EmailAddress);
+                    cmd.Parameters.AddWithValue("@PhoneNumber", item.PhoneNumber);
+                    cmd.Parameters.AddWithValue("@FullName", item.FullName);
+                    cmd.Parameters.AddWithValue("@ForceChangePassword", item.ForceChangePassword);
+                    cmd.Parameters.AddWithValue("@PrefferredLanguage", item.PrefferredLanguage);
+                    
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
                     conn.Close();
@@ -75,25 +84,28 @@ namespace CareerCloud.ADODataAccessLayer
                 cmd.Connection = conn;
 
                 cmd.CommandText = @"SELECT *
-                                   FROM [dbo].[Applicant_Job_Applications]";
+                                   FROM [dbo].[Security_Logins]";
                 conn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
                 int counter = 0;
-                ApplicantProfilePoco[] pocos = new ApplicantProfilePoco[1000];
+                SecurityLoginPoco[] pocos = new SecurityLoginPoco[1000];
                 while (rdr.Read())
                 {
-                    ApplicantProfilePoco poco = new ApplicantProfilePoco();
+                    SecurityLoginPoco poco = new SecurityLoginPoco();
                     poco.Id = rdr.GetGuid(0);
-                    poco.Login = rdr.GetGuid(1);
-                    poco.CurrentSalary = (decimal?)rdr.GetSqlValue(2);
-                    poco.CurrentRate = (decimal?)rdr[3];
-                    poco.Currency = rdr.GetString(4);
-                    poco.Country = rdr.GetString(5);
-                    poco.Province = rdr.GetString(6);
-                    poco.Street = rdr.GetString(7);
-                    poco.City = rdr.GetString(8);
-                    poco.PostalCode = rdr.GetString(9);
-                    poco.TimeStamp = (byte[])rdr[10];
+                    poco.Login = rdr.GetString(1);
+                    poco.Password = rdr.GetString(2);
+                    poco.Created = rdr.GetDateTime(3);
+                    poco.PasswordUpdate = (DateTime?)rdr[4];
+                    poco.AgreementAccepted = (DateTime?)rdr[5];
+                    poco.IsLocked = rdr.GetBoolean(6);
+                    poco.IsInactive = rdr.GetBoolean(7);
+                    poco.EmailAddress = rdr.GetString(8);
+                    poco.PhoneNumber = rdr.GetString(9);
+                    poco.FullName = rdr.GetString(10);
+                    poco.ForceChangePassword = rdr.GetBoolean(11);
+                    poco.PrefferredLanguage = rdr.GetString(12);
+                    poco.TimeStamp = (byte[])rdr[13];
                     pocos[counter] = poco;
                     counter++;
                 }
@@ -120,9 +132,9 @@ namespace CareerCloud.ADODataAccessLayer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                foreach (ApplicantJobApplicationPoco item in items)
+                foreach (SecurityLoginPoco item in items)
                 {
-                    cmd.CommandText = @"DELETE FROM [dbo].[Applicant_Job_Applications]
+                    cmd.CommandText = @"DELETE FROM [dbo].[Security_Logins]
                                         WHERE [Id] = @Id";
                     cmd.Parameters.AddWithValue("@Id", item.Id);
                     conn.Open();
@@ -138,19 +150,36 @@ namespace CareerCloud.ADODataAccessLayer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                foreach (ApplicantJobApplicationPoco item in items)
+                foreach (SecurityLoginPoco item in items)
                 {
-                    cmd.CommandText = @"UPDATE [dbo].[Applicant_Job_Applications]
-                                       SET [Id] = @Id
-                                          ,[Applicant] = @Applicant
-                                          ,[Job] = @Job
-                                          ,[Application_Date] = @ApplicationDate
+                    cmd.CommandText = @"UPDATE [dbo].[Security_Logins]
+                                        SET [Login] = @Login
+                                            ,[Password] = @Password
+                                            ,[Created_Date] = @Created_Date
+                                            ,[Password_Update_Date] = @Password_Update_Date
+                                            ,[Agreement_Accepted_Date] = @Agreement_Accepted_Date
+                                            ,[Is_Locked] = @Is_Locked
+                                            ,[Is_Inactive] = @Is_Inactive
+                                            ,[Email_Address] = @Email_Address
+                                            ,[Phone_Number] = @Phone_Number
+                                            ,[Full_Name] = @Full_Name
+                                            ,[Force_Change_Password] = @Force_Change_Password
+                                            ,[Prefferred_Language] = @Prefferred_Language
                                        WHERE [Id] = @Id";
-                    cmd.Parameters.AddWithValue("@Id", item.Id);
-                    cmd.Parameters.AddWithValue("@Applicant", item.Applicant);
-                    cmd.Parameters.AddWithValue("@Job", item.Job);
-                    cmd.Parameters.AddWithValue("@ApplicationDate", item.ApplicationDate);
 
+                    cmd.Parameters.AddWithValue("@Id", item.Id);
+                    cmd.Parameters.AddWithValue("@Login", item.Login);
+                    cmd.Parameters.AddWithValue("@Password", item.Password);
+                    cmd.Parameters.AddWithValue("@CreatedDate", item.Created);
+                    cmd.Parameters.AddWithValue("@PasswordUpdateDate", item.PasswordUpdate);
+                    cmd.Parameters.AddWithValue("@AgreementAcceptedDate", item.AgreementAccepted);
+                    cmd.Parameters.AddWithValue("@IsLocked", item.IsLocked);
+                    cmd.Parameters.AddWithValue("@IsInactive", item.IsInactive);
+                    cmd.Parameters.AddWithValue("@EmailAddress", item.EmailAddress);
+                    cmd.Parameters.AddWithValue("@PhoneNumber", item.PhoneNumber);
+                    cmd.Parameters.AddWithValue("@FullName", item.FullName);
+                    cmd.Parameters.AddWithValue("@ForceChangePassword", item.ForceChangePassword);
+                    cmd.Parameters.AddWithValue("@PrefferredLanguage", item.PrefferredLanguage);
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
                     conn.Close();
