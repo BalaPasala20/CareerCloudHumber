@@ -19,41 +19,17 @@ namespace CareerCloud.ADODataAccessLayer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                foreach (ApplicantProfilePoco item in items)
+                foreach (SystemCountryCodePoco item in items)
                 {
-                    cmd.CommandText = @"INSERT INTO [dbo].[Applicant_Profiles]
-                                       ([Id]
-                                       ,[Login]
-                                       ,[Current_Salary]
-                                       ,[Current_Rate]
-                                       ,[Currency]
-                                       ,[Country_Code]
-                                       ,[State_Province_Code]
-                                       ,[Street_Address]
-                                       ,[City_Town]
-                                       ,[Zip_Postal_Code])
-                                       VALUES
-                                       (@Id
-                                       ,@Login
-                                       ,@CurrentSalary
-                                       ,@CurrentRate
-                                       ,@Currency
-                                       ,@CountryCode
-                                       ,@StateProvinceCode
-                                       ,@StreetAddress
-                                       ,@CityTown
-                                       ,@ZipPostalCode)";
+                    cmd.CommandText = @"INSERT INTO [dbo].[System_Country_Codes]
+                                        ([Code]
+                                        ,[Name])
+                                    VALUES
+                                        (@Code
+                                        ,@Name)";
 
-                    cmd.Parameters.AddWithValue("@Id", item.Id);
-                    cmd.Parameters.AddWithValue("@Login", item.Login);
-                    cmd.Parameters.AddWithValue("@CurrentSalary", item.CurrentSalary);
-                    cmd.Parameters.AddWithValue("@CurrentRate", item.CurrentRate);
-                    cmd.Parameters.AddWithValue("@Currency", item.Currency);
-                    cmd.Parameters.AddWithValue("@CountryCode", item.Country);
-                    cmd.Parameters.AddWithValue("@StateProvinceCode", item.Province);
-                    cmd.Parameters.AddWithValue("@StreetAddress", item.Street);
-                    cmd.Parameters.AddWithValue("@CityTown", item.City);
-                    cmd.Parameters.AddWithValue("@ZipPostalCode", item.PostalCode);
+                    cmd.Parameters.AddWithValue("@Code", item.Code);
+                    cmd.Parameters.AddWithValue("@Name", item.Name);                   
 
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
@@ -75,25 +51,16 @@ namespace CareerCloud.ADODataAccessLayer
                 cmd.Connection = conn;
 
                 cmd.CommandText = @"SELECT *
-                                   FROM [dbo].[Applicant_Job_Applications]";
+                                   FROM [dbo].[System_Country_Codes]";
                 conn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
                 int counter = 0;
-                ApplicantProfilePoco[] pocos = new ApplicantProfilePoco[1000];
+                SystemCountryCodePoco[] pocos = new SystemCountryCodePoco[1000];
                 while (rdr.Read())
                 {
-                    ApplicantProfilePoco poco = new ApplicantProfilePoco();
-                    poco.Id = rdr.GetGuid(0);
-                    poco.Login = rdr.GetGuid(1);
-                    poco.CurrentSalary = (decimal?)rdr.GetSqlValue(2);
-                    poco.CurrentRate = (decimal?)rdr[3];
-                    poco.Currency = rdr.GetString(4);
-                    poco.Country = rdr.GetString(5);
-                    poco.Province = rdr.GetString(6);
-                    poco.Street = rdr.GetString(7);
-                    poco.City = rdr.GetString(8);
-                    poco.PostalCode = rdr.GetString(9);
-                    poco.TimeStamp = (byte[])rdr[10];
+                    SystemCountryCodePoco poco = new SystemCountryCodePoco();
+                    poco.Code = rdr.GetString(0);
+                    poco.Name = rdr.GetString(1);                   
                     pocos[counter] = poco;
                     counter++;
                 }
@@ -120,11 +87,11 @@ namespace CareerCloud.ADODataAccessLayer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                foreach (ApplicantJobApplicationPoco item in items)
+                foreach (SystemCountryCodePoco item in items)
                 {
-                    cmd.CommandText = @"DELETE FROM [dbo].[Applicant_Job_Applications]
-                                        WHERE [Id] = @Id";
-                    cmd.Parameters.AddWithValue("@Id", item.Id);
+                    cmd.CommandText = @"DELETE FROM [dbo].[System_Country_Codes]
+                                        WHERE [Code] = @Code";
+                    cmd.Parameters.AddWithValue("@Code", item.Code);
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
                     conn.Close();
@@ -138,19 +105,13 @@ namespace CareerCloud.ADODataAccessLayer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                foreach (ApplicantJobApplicationPoco item in items)
+                foreach (SystemCountryCodePoco item in items)
                 {
-                    cmd.CommandText = @"UPDATE [dbo].[Applicant_Job_Applications]
-                                       SET [Id] = @Id
-                                          ,[Applicant] = @Applicant
-                                          ,[Job] = @Job
-                                          ,[Application_Date] = @ApplicationDate
-                                       WHERE [Id] = @Id";
-                    cmd.Parameters.AddWithValue("@Id", item.Id);
-                    cmd.Parameters.AddWithValue("@Applicant", item.Applicant);
-                    cmd.Parameters.AddWithValue("@Job", item.Job);
-                    cmd.Parameters.AddWithValue("@ApplicationDate", item.ApplicationDate);
-
+                    cmd.CommandText = @"UPDATE [dbo].[System_Country_Codes]
+                                        SET [Name] = <Name, nvarchar(50),>
+                                       WHERE [Code] = @Code";
+                    cmd.Parameters.AddWithValue("@Code", item.Code);
+                    
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
                     conn.Close();
