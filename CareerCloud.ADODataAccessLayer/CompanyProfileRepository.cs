@@ -63,7 +63,7 @@ namespace CareerCloud.ADODataAccessLayer
                 cmd.Connection = conn;
 
                 cmd.CommandText = @"SELECT *
-                                   FROM [dbo].[Applicant_Job_Applications]";
+                                   FROM [dbo].[Company_Profiles]";
                 conn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
                 int counter = 0;
@@ -73,10 +73,10 @@ namespace CareerCloud.ADODataAccessLayer
                     CompanyProfilePoco poco = new CompanyProfilePoco();
                     poco.Id = rdr.GetGuid(0);
                     poco.RegistrationDate = rdr.GetDateTime(1);
-                    poco.CompanyWebsite = rdr.GetString(2);
+                    poco.CompanyWebsite = rdr.IsDBNull(2) ? (string)null : rdr.GetString(2); 
                     poco.ContactPhone = rdr.GetString(3);
-                    poco.ContactName = rdr.GetString(4);
-                    poco.CompanyLogo = (byte[])rdr[5];
+                    poco.ContactName = rdr.IsDBNull(4) ? (string)null : rdr.GetString(4); 
+                    poco.CompanyLogo = rdr.IsDBNull(5) ? (byte[])null :(byte[]) rdr[5]; ;
                     poco.TimeStamp = (byte[])rdr[6];
                     pocos[counter] = poco;
                     counter++;
@@ -125,11 +125,11 @@ namespace CareerCloud.ADODataAccessLayer
                 foreach (CompanyProfilePoco item in items)
                 {
                     cmd.CommandText = @"UPDATE [dbo].[Company_Profiles]
-                                        SET [Registration_Date] = @Registration_Date
-                                            ,[Company_Website] = @Company_Website
-                                            ,[Contact_Phone] = @Contact_Phone
-                                            ,[Contact_Name] = @Contact_Name
-                                            ,[Company_Logo] = @Company_Logo
+                                        SET [Registration_Date] = @RegistrationDate
+                                            ,[Company_Website] = @CompanyWebsite
+                                            ,[Contact_Phone] = @ContactPhone
+                                            ,[Contact_Name] = @ContactName
+                                            ,[Company_Logo] = @CompanyLogo
                                        WHERE [Id] = @Id";
 
                     cmd.Parameters.AddWithValue("@Id", item.Id);

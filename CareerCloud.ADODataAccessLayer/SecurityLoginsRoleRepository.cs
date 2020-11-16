@@ -28,7 +28,7 @@ namespace CareerCloud.ADODataAccessLayer
                                     VALUES
                                         (@Id
                                         ,@Login
-                                        ,@Role>)";
+                                        ,@Role)";
 
                     cmd.Parameters.AddWithValue("@Id", item.Id);
                     cmd.Parameters.AddWithValue("@Login", item.Login);
@@ -65,7 +65,7 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.Id = rdr.GetGuid(0);
                     poco.Login = rdr.GetGuid(1);
                     poco.Role = rdr.GetGuid(2);
-                    poco.TimeStamp = (byte[])rdr[10];
+                    poco.TimeStamp = (byte[])rdr[3];
                     pocos[counter] = poco;
                     counter++;
                 }

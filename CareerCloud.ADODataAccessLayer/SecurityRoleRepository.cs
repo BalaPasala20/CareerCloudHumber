@@ -113,7 +113,7 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     cmd.CommandText = @"UPDATE [dbo].[Security_Roles]
                                         SET [Role] = @Role
-                                            ,[Is_Inactive] = @Is_Inactive
+                                            ,[Is_Inactive] = @IsInactive
                                        WHERE [Id] = @Id";
 
                     cmd.Parameters.AddWithValue("@Id", item.Id);

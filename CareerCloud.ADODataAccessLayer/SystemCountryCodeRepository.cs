@@ -108,8 +108,10 @@ namespace CareerCloud.ADODataAccessLayer
                 foreach (SystemCountryCodePoco item in items)
                 {
                     cmd.CommandText = @"UPDATE [dbo].[System_Country_Codes]
-                                        SET [Name] = <Name, nvarchar(50),>
+                                        SET [Name] = @Name
                                        WHERE [Code] = @Code";
+
+                    cmd.Parameters.AddWithValue("@Name", item.Name);
                     cmd.Parameters.AddWithValue("@Code", item.Code);
                     
                     conn.Open();

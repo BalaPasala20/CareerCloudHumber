@@ -64,7 +64,7 @@ namespace CareerCloud.ADODataAccessLayer
                 conn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
                 int counter = 0;
-                SecurityLoginsLogPoco[] pocos = new SecurityLoginsLogPoco[1000];
+                SecurityLoginsLogPoco[] pocos = new SecurityLoginsLogPoco[1800];
                 while (rdr.Read())
                 {
                     SecurityLoginsLogPoco poco = new SecurityLoginsLogPoco();
@@ -72,8 +72,7 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.Login = rdr.GetGuid(1);
                     poco.SourceIP = rdr.GetString(2);
                     poco.LogonDate = (DateTime)rdr[3];
-                    poco.IsSuccesful = rdr.GetBoolean(4);
-                    
+                    poco.IsSuccesful = rdr.GetBoolean(4);                    
                     pocos[counter] = poco;
                     counter++;
                 }
@@ -122,9 +121,9 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     cmd.CommandText = @"UPDATE [dbo].[Security_Logins_Log]
                                         SET [Login] = @Login
-                                            ,[Source_IP] = @Source_IP
-                                            ,[Logon_Date] = @Logon_Date
-                                            ,[Is_Succesful] = @Is_Succesful
+                                            ,[Source_IP] = @SourceIP
+                                            ,[Logon_Date] = @LogonDate
+                                            ,[Is_Succesful] = @IsSuccesful
                                        WHERE [Id] = @Id";
 
                     cmd.Parameters.AddWithValue("@Id", item.Id);

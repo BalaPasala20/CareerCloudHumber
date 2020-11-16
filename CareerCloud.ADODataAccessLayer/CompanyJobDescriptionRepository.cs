@@ -61,7 +61,7 @@ namespace CareerCloud.ADODataAccessLayer
                 conn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
                 int counter = 0;
-                CompanyJobDescriptionPoco[] pocos = new CompanyJobDescriptionPoco[1000];
+                CompanyJobDescriptionPoco[] pocos = new CompanyJobDescriptionPoco[1010];
                 while (rdr.Read())
                 {
                     CompanyJobDescriptionPoco poco = new CompanyJobDescriptionPoco();
@@ -118,8 +118,8 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     cmd.CommandText = @"UPDATE [dbo].[Company_Jobs_Descriptions]
                                         SET [Job] = @Job
-                                            ,[Job_Name] = @Job_Name
-                                            ,[Job_Descriptions] = @Job_Descriptions
+                                            ,[Job_Name] = @JobName
+                                            ,[Job_Descriptions] = @JobDescriptions
                                        WHERE [Id] = @Id";
 
                     cmd.Parameters.AddWithValue("@Id", item.Id);

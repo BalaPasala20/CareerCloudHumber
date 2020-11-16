@@ -77,10 +77,10 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.Id = rdr.GetGuid(0);
                     poco.Company = rdr.GetGuid(1);
                     poco.CountryCode = rdr.GetString(2);
-                    poco.Province = rdr.GetString(3);
-                    poco.Street = rdr.GetString(4);
-                    poco.City = rdr.GetString(5);
-                    poco.PostalCode = rdr.GetString(6);
+                    poco.Province = rdr.IsDBNull(3) ? (string)null : rdr.GetString(3);
+                    poco.Street = rdr.IsDBNull(4) ? (string)null : rdr.GetString(4);
+                    poco.City = rdr.IsDBNull(5) ? (string)null : rdr.GetString(5);
+                    poco.PostalCode = rdr.IsDBNull(6) ? (string)null : rdr.GetString(6);
                     poco.TimeStamp = (byte[])rdr[7];
                     pocos[counter] = poco;
                     counter++;

@@ -96,15 +96,15 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.Login = rdr.GetString(1);
                     poco.Password = rdr.GetString(2);
                     poco.Created = rdr.GetDateTime(3);
-                    poco.PasswordUpdate = (DateTime?)rdr[4];
-                    poco.AgreementAccepted = (DateTime?)rdr[5];
+                    poco.PasswordUpdate = rdr.IsDBNull(4) ? (DateTime?)null : rdr.GetDateTime(4);
+                    poco.AgreementAccepted = rdr.IsDBNull(5) ? (DateTime?)null : rdr.GetDateTime(5);
                     poco.IsLocked = rdr.GetBoolean(6);
                     poco.IsInactive = rdr.GetBoolean(7);
                     poco.EmailAddress = rdr.GetString(8);
-                    poco.PhoneNumber = rdr.GetString(9);
-                    poco.FullName = rdr.GetString(10);
+                    poco.PhoneNumber = rdr.IsDBNull(9) ? (string)null : rdr.GetString(9);
+                    poco.FullName = rdr.IsDBNull(10) ? (string)null : rdr.GetString(10);
                     poco.ForceChangePassword = rdr.GetBoolean(11);
-                    poco.PrefferredLanguage = rdr.GetString(12);
+                    poco.PrefferredLanguage = rdr.IsDBNull(12) ? (string)null : rdr.GetString(12);
                     poco.TimeStamp = (byte[])rdr[13];
                     pocos[counter] = poco;
                     counter++;
@@ -155,16 +155,16 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.CommandText = @"UPDATE [dbo].[Security_Logins]
                                         SET [Login] = @Login
                                             ,[Password] = @Password
-                                            ,[Created_Date] = @Created_Date
-                                            ,[Password_Update_Date] = @Password_Update_Date
-                                            ,[Agreement_Accepted_Date] = @Agreement_Accepted_Date
-                                            ,[Is_Locked] = @Is_Locked
-                                            ,[Is_Inactive] = @Is_Inactive
-                                            ,[Email_Address] = @Email_Address
-                                            ,[Phone_Number] = @Phone_Number
-                                            ,[Full_Name] = @Full_Name
-                                            ,[Force_Change_Password] = @Force_Change_Password
-                                            ,[Prefferred_Language] = @Prefferred_Language
+                                            ,[Created_Date] = @CreatedDate
+                                            ,[Password_Update_Date] = @PasswordUpdateDate
+                                            ,[Agreement_Accepted_Date] = @AgreementAcceptedDate
+                                            ,[Is_Locked] = @IsLocked
+                                            ,[Is_Inactive] = @IsInactive
+                                            ,[Email_Address] = @EmailAddress
+                                            ,[Phone_Number] = @PhoneNumber
+                                            ,[Full_Name] = @FullName
+                                            ,[Force_Change_Password] = @ForceChangePassword
+                                            ,[Prefferred_Language] = @PrefferredLanguage
                                        WHERE [Id] = @Id";
 
                     cmd.Parameters.AddWithValue("@Id", item.Id);

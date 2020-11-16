@@ -64,7 +64,7 @@ namespace CareerCloud.ADODataAccessLayer
                 conn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
                 int counter = 0;
-                CompanyJobSkillPoco[] pocos = new CompanyJobSkillPoco[1000];
+                CompanyJobSkillPoco[] pocos = new CompanyJobSkillPoco[5010];
                 while (rdr.Read())
                 {
                     CompanyJobSkillPoco poco = new CompanyJobSkillPoco();
@@ -72,7 +72,7 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.Job = rdr.GetGuid(1);
                     poco.Skill = rdr.GetString(2);
                     poco.SkillLevel = rdr.GetString(3);
-                    poco.Importance = rdr.GetInt16(4);
+                    poco.Importance = rdr.GetInt32(4);
                     poco.TimeStamp = (byte[])rdr[5];
                     pocos[counter] = poco;
                     counter++;
@@ -123,7 +123,7 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.CommandText = @"UPDATE [dbo].[Company_Job_Skills]
                                         SET [Job] = @Job
                                             ,[Skill] = @Skill
-                                            ,[Skill_Level] = @Skill_Level
+                                            ,[Skill_Level] = @SkillLevel
                                             ,[Importance] = @Importance
                                        WHERE [Id] = @Id";
 

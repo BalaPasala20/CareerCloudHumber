@@ -113,7 +113,7 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     cmd.CommandText = @"UPDATE [dbo].[System_Language_Codes]
                                         SET [Name] = @Name
-                                            ,[Native_Name] = @Native_Name
+                                            ,[Native_Name] = @NativeName
                                        WHERE [LanguageID] = @LanguageId";
 
                     cmd.Parameters.AddWithValue("@LanguageID", item.LanguageID);
