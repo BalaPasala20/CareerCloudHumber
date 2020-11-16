@@ -19,41 +19,44 @@ namespace CareerCloud.ADODataAccessLayer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                foreach (ApplicantProfilePoco item in items)
+                foreach (ApplicantWorkHistoryPoco item in items)
                 {
-                    cmd.CommandText = @"INSERT INTO [dbo].[Applicant_Profiles]
+                    cmd.CommandText = @"INSERT INTO [dbo].[Applicant_Work_History]
                                        ([Id]
-                                       ,[Login]
-                                       ,[Current_Salary]
-                                       ,[Current_Rate]
-                                       ,[Currency]
+                                       ,[Applicant]
+                                       ,[Company_Name]
                                        ,[Country_Code]
-                                       ,[State_Province_Code]
-                                       ,[Street_Address]
-                                       ,[City_Town]
-                                       ,[Zip_Postal_Code])
-                                       VALUES
+                                       ,[Location]
+                                       ,[Job_Title]
+                                       ,[Job_Description]
+                                       ,[Start_Month]
+                                       ,[Start_Year]
+                                       ,[End_Month]
+                                       ,[End_Year])
+                                 VALUES
                                        (@Id
-                                       ,@Login
-                                       ,@CurrentSalary
-                                       ,@CurrentRate
-                                       ,@Currency
+                                       ,@Applicant
+                                       ,@CompanyName
                                        ,@CountryCode
-                                       ,@StateProvinceCode
-                                       ,@StreetAddress
-                                       ,@CityTown
-                                       ,@ZipPostalCode)";
+                                       ,@Location
+                                       ,@JobTitle
+                                       ,@JobDescription
+                                       ,@StartMonth
+                                       ,@StartYear
+                                       ,@EndMonth
+                                       ,@EndYear)";
 
                     cmd.Parameters.AddWithValue("@Id", item.Id);
-                    cmd.Parameters.AddWithValue("@Login", item.Login);
-                    cmd.Parameters.AddWithValue("@CurrentSalary", item.CurrentSalary);
-                    cmd.Parameters.AddWithValue("@CurrentRate", item.CurrentRate);
-                    cmd.Parameters.AddWithValue("@Currency", item.Currency);
-                    cmd.Parameters.AddWithValue("@CountryCode", item.Country);
-                    cmd.Parameters.AddWithValue("@StateProvinceCode", item.Province);
-                    cmd.Parameters.AddWithValue("@StreetAddress", item.Street);
-                    cmd.Parameters.AddWithValue("@CityTown", item.City);
-                    cmd.Parameters.AddWithValue("@ZipPostalCode", item.PostalCode);
+                    cmd.Parameters.AddWithValue("@Applicant", item.Applicant);
+                    cmd.Parameters.AddWithValue("@CompanyName", item.CompanyName);
+                    cmd.Parameters.AddWithValue("@CountryCode", item.CountryCode);
+                    cmd.Parameters.AddWithValue("@Location", item.Location);
+                    cmd.Parameters.AddWithValue("@JobTitle", item.JobTitle);
+                    cmd.Parameters.AddWithValue("@JobDescription", item.JobDescription);
+                    cmd.Parameters.AddWithValue("@StartMonth", item.StartMonth);
+                    cmd.Parameters.AddWithValue("@StartYear", item.StartYear);
+                    cmd.Parameters.AddWithValue("@EndMonth", item.EndMonth);
+                    cmd.Parameters.AddWithValue("@EndYear", item.EndYear);                    
 
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
@@ -75,25 +78,26 @@ namespace CareerCloud.ADODataAccessLayer
                 cmd.Connection = conn;
 
                 cmd.CommandText = @"SELECT *
-                                   FROM [dbo].[Applicant_Job_Applications]";
+                                   FROM [dbo].[Applicant_Work_History]";
                 conn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
                 int counter = 0;
-                ApplicantProfilePoco[] pocos = new ApplicantProfilePoco[1000];
+                ApplicantWorkHistoryPoco[] pocos = new ApplicantWorkHistoryPoco[1000];
                 while (rdr.Read())
                 {
-                    ApplicantProfilePoco poco = new ApplicantProfilePoco();
+                    ApplicantWorkHistoryPoco poco = new ApplicantWorkHistoryPoco();
                     poco.Id = rdr.GetGuid(0);
-                    poco.Login = rdr.GetGuid(1);
-                    poco.CurrentSalary = (decimal?)rdr.GetSqlValue(2);
-                    poco.CurrentRate = (decimal?)rdr[3];
-                    poco.Currency = rdr.GetString(4);
-                    poco.Country = rdr.GetString(5);
-                    poco.Province = rdr.GetString(6);
-                    poco.Street = rdr.GetString(7);
-                    poco.City = rdr.GetString(8);
-                    poco.PostalCode = rdr.GetString(9);
-                    poco.TimeStamp = (byte[])rdr[10];
+                    poco.Applicant = rdr.GetGuid(1);
+                    poco.CompanyName = rdr.GetString(2);
+                    poco.CountryCode = rdr.GetString(3);
+                    poco.Location = rdr.GetString(4);
+                    poco.JobTitle = rdr.GetString(5);
+                    poco.JobDescription = rdr.GetString(6);
+                    poco.StartMonth = (short)rdr[7];
+                    poco.StartYear = rdr.GetInt16(8);
+                    poco.EndMonth = (short)rdr[9];
+                    poco.EndYear = rdr.GetInt16(10);
+                    poco.TimeStamp = (byte[])rdr[11];
                     pocos[counter] = poco;
                     counter++;
                 }
@@ -120,9 +124,9 @@ namespace CareerCloud.ADODataAccessLayer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                foreach (ApplicantJobApplicationPoco item in items)
+                foreach (ApplicantWorkHistoryPoco item in items)
                 {
-                    cmd.CommandText = @"DELETE FROM [dbo].[Applicant_Job_Applications]
+                    cmd.CommandText = @"DELETE FROM [dbo].[Applicant_Work_History]
                                         WHERE [Id] = @Id";
                     cmd.Parameters.AddWithValue("@Id", item.Id);
                     conn.Open();
@@ -138,18 +142,32 @@ namespace CareerCloud.ADODataAccessLayer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                foreach (ApplicantJobApplicationPoco item in items)
+                foreach (ApplicantWorkHistoryPoco item in items)
                 {
-                    cmd.CommandText = @"UPDATE [dbo].[Applicant_Job_Applications]
-                                       SET [Id] = @Id
-                                          ,[Applicant] = @Applicant
-                                          ,[Job] = @Job
-                                          ,[Application_Date] = @ApplicationDate
-                                       WHERE [Id] = @Id";
+                    cmd.CommandText = @"UPDATE [dbo].[Applicant_Work_History]
+                                        SET [Applicant] = @Applicant
+                                            ,[Company_Name] = @Company_Name
+                                            ,[Country_Code] = @Country_Code
+                                            ,[Location] = @Location
+                                            ,[Job_Title] = @Job_Title
+                                            ,[Job_Description] = @Job_Description
+                                            ,[Start_Month] = @Start_Month
+                                            ,[Start_Year] = @Start_Year
+                                            ,[End_Month] = @End_Month
+                                            ,[End_Year] = @End_Year
+                                        WHERE [Id] = @Id";
+
                     cmd.Parameters.AddWithValue("@Id", item.Id);
                     cmd.Parameters.AddWithValue("@Applicant", item.Applicant);
-                    cmd.Parameters.AddWithValue("@Job", item.Job);
-                    cmd.Parameters.AddWithValue("@ApplicationDate", item.ApplicationDate);
+                    cmd.Parameters.AddWithValue("@CompanyName", item.CompanyName);
+                    cmd.Parameters.AddWithValue("@CountryCode", item.CountryCode);
+                    cmd.Parameters.AddWithValue("@Location", item.Location);
+                    cmd.Parameters.AddWithValue("@JobTitle", item.JobTitle);
+                    cmd.Parameters.AddWithValue("@JobDescription", item.JobDescription);
+                    cmd.Parameters.AddWithValue("@StartMonth", item.StartMonth);
+                    cmd.Parameters.AddWithValue("@StartYear", item.StartYear);
+                    cmd.Parameters.AddWithValue("@EndMonth", item.EndMonth);
+                    cmd.Parameters.AddWithValue("@EndYear", item.EndYear);
 
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();

@@ -21,39 +21,24 @@ namespace CareerCloud.ADODataAccessLayer
                 cmd.Connection = conn;
                 foreach (ApplicantProfilePoco item in items)
                 {
-                    cmd.CommandText = @"INSERT INTO [dbo].[Applicant_Profiles]
-                                       ([Id]
-                                       ,[Login]
-                                       ,[Current_Salary]
-                                       ,[Current_Rate]
-                                       ,[Currency]
-                                       ,[Country_Code]
-                                       ,[State_Province_Code]
-                                       ,[Street_Address]
-                                       ,[City_Town]
-                                       ,[Zip_Postal_Code])
-                                       VALUES
-                                       (@Id
-                                       ,@Login
-                                       ,@CurrentSalary
-                                       ,@CurrentRate
-                                       ,@Currency
-                                       ,@CountryCode
-                                       ,@StateProvinceCode
-                                       ,@StreetAddress
-                                       ,@CityTown
-                                       ,@ZipPostalCode)";
+                    cmd.CommandText = @"INSERT INTO [dbo].[Company_Jobs]
+                                        ([Id]
+                                        ,[Company]
+                                        ,[Profile_Created]
+                                        ,[Is_Inactive]
+                                        ,[Is_Company_Hidden])
+                                    VALUES
+                                        (@Id
+                                        ,@Company
+                                        ,@ProfileCreated
+                                        ,@IsInactive
+                                        ,@IsCompanyHidden)";
 
                     cmd.Parameters.AddWithValue("@Id", item.Id);
-                    cmd.Parameters.AddWithValue("@Login", item.Login);
-                    cmd.Parameters.AddWithValue("@CurrentSalary", item.CurrentSalary);
-                    cmd.Parameters.AddWithValue("@CurrentRate", item.CurrentRate);
-                    cmd.Parameters.AddWithValue("@Currency", item.Currency);
-                    cmd.Parameters.AddWithValue("@CountryCode", item.Country);
-                    cmd.Parameters.AddWithValue("@StateProvinceCode", item.Province);
-                    cmd.Parameters.AddWithValue("@StreetAddress", item.Street);
-                    cmd.Parameters.AddWithValue("@CityTown", item.City);
-                    cmd.Parameters.AddWithValue("@ZipPostalCode", item.PostalCode);
+                    cmd.Parameters.AddWithValue("@Company", item.Com);
+                    cmd.Parameters.AddWithValue("@ProfileCreated", item.CurrentSalary);
+                    cmd.Parameters.AddWithValue("@IsInactive", item.CurrentRate);
+                    cmd.Parameters.AddWithValue("@IsCompanyHidden", item.Currency);
 
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();

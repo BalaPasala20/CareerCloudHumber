@@ -57,25 +57,19 @@ namespace CareerCloud.ADODataAccessLayer
                 cmd.Connection = conn;
 
                 cmd.CommandText = @"SELECT *
-                                   FROM [dbo].[Applicant_Job_Applications]";
+                                   FROM [dbo].[Applicant_Resumes]";
                 conn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
                 int counter = 0;
-                ApplicantProfilePoco[] pocos = new ApplicantProfilePoco[1000];
+                ApplicantResumePoco[] pocos = new ApplicantResumePoco[1000];
                 while (rdr.Read())
                 {
-                    ApplicantProfilePoco poco = new ApplicantProfilePoco();
+                    ApplicantResumePoco poco = new ApplicantResumePoco();
                     poco.Id = rdr.GetGuid(0);
-                    poco.Login = rdr.GetGuid(1);
-                    poco.CurrentSalary = (decimal?)rdr.GetSqlValue(2);
-                    poco.CurrentRate = (decimal?)rdr[3];
-                    poco.Currency = rdr.GetString(4);
-                    poco.Country = rdr.GetString(5);
-                    poco.Province = rdr.GetString(6);
-                    poco.Street = rdr.GetString(7);
-                    poco.City = rdr.GetString(8);
-                    poco.PostalCode = rdr.GetString(9);
-                    poco.TimeStamp = (byte[])rdr[10];
+                    poco.Applicant = rdr.GetGuid(1);
+                    poco.Resume = rdr.GetString(2);
+                    poco.LastUpdated = (DateTime?)rdr.GetSqlValue(2);
+
                     pocos[counter] = poco;
                     counter++;
                 }
@@ -102,9 +96,9 @@ namespace CareerCloud.ADODataAccessLayer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                foreach (ApplicantJobApplicationPoco item in items)
+                foreach (ApplicantResumePoco item in items)
                 {
-                    cmd.CommandText = @"DELETE FROM [dbo].[Applicant_Job_Applications]
+                    cmd.CommandText = @"DELETE FROM [dbo].[Applicant_Resumes]
                                         WHERE [Id] = @Id";
                     cmd.Parameters.AddWithValue("@Id", item.Id);
                     conn.Open();
@@ -120,18 +114,18 @@ namespace CareerCloud.ADODataAccessLayer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = conn;
-                foreach (ApplicantJobApplicationPoco item in items)
+                foreach (ApplicantResumePoco item in items)
                 {
-                    cmd.CommandText = @"UPDATE [dbo].[Applicant_Job_Applications]
-                                       SET [Id] = @Id
-                                          ,[Applicant] = @Applicant
-                                          ,[Job] = @Job
-                                          ,[Application_Date] = @ApplicationDate
-                                       WHERE [Id] = @Id";
+                    cmd.CommandText = @"UPDATE [dbo].[Applicant_Resumes]
+                                        SET [Applicant] = @Applicant
+                                            ,[Resume] = @Resume
+                                            ,[Last_Updated] = @Last_Updated
+                                        WHERE [Id] = @Id";
+
                     cmd.Parameters.AddWithValue("@Id", item.Id);
                     cmd.Parameters.AddWithValue("@Applicant", item.Applicant);
-                    cmd.Parameters.AddWithValue("@Job", item.Job);
-                    cmd.Parameters.AddWithValue("@ApplicationDate", item.ApplicationDate);
+                    cmd.Parameters.AddWithValue("@Resume", item.Resume);
+                    cmd.Parameters.AddWithValue("@LastUpdated", item.LastUpdated);
 
                     conn.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
