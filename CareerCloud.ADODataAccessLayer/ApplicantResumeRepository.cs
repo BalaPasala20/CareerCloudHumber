@@ -68,8 +68,9 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.Id = rdr.GetGuid(0);
                     poco.Applicant = rdr.GetGuid(1);
                     poco.Resume = rdr.GetString(2);
-                    poco.LastUpdated = (DateTime?)rdr.GetSqlValue(2);
-
+                    //poco.LastUpdated = (DateTime?)rdr.GetSqlValue(3);
+                    poco.LastUpdated= rdr.IsDBNull(3) ? (DateTime?)null : rdr.GetDateTime(3);
+                   // poco.LastUpdated = (DateTime?)rdr[3];
                     pocos[counter] = poco;
                     counter++;
                 }
@@ -119,7 +120,7 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.CommandText = @"UPDATE [dbo].[Applicant_Resumes]
                                         SET [Applicant] = @Applicant
                                             ,[Resume] = @Resume
-                                            ,[Last_Updated] = @Last_Updated
+                                            ,[Last_Updated] = @LastUpdated
                                         WHERE [Id] = @Id";
 
                     cmd.Parameters.AddWithValue("@Id", item.Id);

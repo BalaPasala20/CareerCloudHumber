@@ -82,10 +82,10 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.Skill = rdr.GetString(2);
                     poco.SkillLevel = (string)rdr[3];
                     poco.StartMonth = rdr.GetByte(4);
-                    poco.StartYear = rdr.GetInt16(5);
+                    poco.StartYear = rdr.GetInt32(5);
                     poco.EndMonth = rdr.GetByte(6);
-                    poco.EndYear = rdr.GetInt16(7);
-                    poco.TimeStamp = (byte[])rdr[10];
+                    poco.EndYear = rdr.GetInt32(7);
+                    poco.TimeStamp = (byte[])rdr[8];
                     pocos[counter] = poco;
                     counter++;
                 }
@@ -132,14 +132,14 @@ namespace CareerCloud.ADODataAccessLayer
                 cmd.Connection = conn;
                 foreach (ApplicantSkillPoco item in items)
                 {
-                    cmd.CommandText = @"UPDATE UPDATE [dbo].[Applicant_Skills]
+                    cmd.CommandText = @"UPDATE [dbo].[Applicant_Skills]
                                        SET [Applicant] = @Applicant
                                           ,[Skill] = @Skill
-                                          ,[Skill_Level] = @Skill_Level
-                                          ,[Start_Month] = @Start_Month
-                                          ,[Start_Year] = @Start_Year
-                                          ,[End_Month] = @End_Month
-                                          ,[End_Year] = @End_Year
+                                          ,[Skill_Level] = @SkillLevel
+                                          ,[Start_Month] = @StartMonth
+                                          ,[Start_Year] = @StartYear
+                                          ,[End_Month] = @EndMonth
+                                          ,[End_Year] = @EndYear
                                        WHERE [Id] = @Id";
 
                     cmd.Parameters.AddWithValue("@Id", item.Id);

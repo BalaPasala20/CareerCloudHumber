@@ -72,7 +72,8 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.Company = rdr.GetGuid(1);
                     poco.LanguageId = rdr.GetString(2);
                     poco.CompanyName = rdr.GetString(3);
-                    poco.TimeStamp = (byte[])rdr[4];
+                    poco.CompanyDescription = rdr.GetString(4);
+                    poco.TimeStamp = (byte[])rdr[5];
                     pocos[counter] = poco;
                     counter++;
                 }

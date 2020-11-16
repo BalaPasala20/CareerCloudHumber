@@ -72,7 +72,7 @@ namespace CareerCloud.ADODataAccessLayer
                 cmd.Connection = conn;
 
                 cmd.CommandText = @"SELECT *
-                                   FROM [dbo].[Applicant_Job_Applications]";
+                                   FROM [dbo].[Applicant_Profiles]";
                 conn.Open();
                 SqlDataReader rdr = cmd.ExecuteReader();
                 int counter = 0;
@@ -82,7 +82,7 @@ namespace CareerCloud.ADODataAccessLayer
                     ApplicantProfilePoco poco = new ApplicantProfilePoco();
                     poco.Id = rdr.GetGuid(0);
                     poco.Login = rdr.GetGuid(1);
-                    poco.CurrentSalary = (decimal?)rdr.GetSqlValue(2);
+                    poco.CurrentSalary = (decimal?)rdr[2];
                     poco.CurrentRate = (decimal?)rdr[3];
                     poco.Currency = rdr.GetString(4);
                     poco.Country = rdr.GetString(5);

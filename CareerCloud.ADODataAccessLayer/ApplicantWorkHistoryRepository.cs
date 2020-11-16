@@ -94,9 +94,9 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.JobTitle = rdr.GetString(5);
                     poco.JobDescription = rdr.GetString(6);
                     poco.StartMonth = (short)rdr[7];
-                    poco.StartYear = rdr.GetInt16(8);
+                    poco.StartYear = rdr.GetInt32(8);
                     poco.EndMonth = (short)rdr[9];
-                    poco.EndYear = rdr.GetInt16(10);
+                    poco.EndYear = rdr.GetInt32(10);
                     poco.TimeStamp = (byte[])rdr[11];
                     pocos[counter] = poco;
                     counter++;
@@ -146,15 +146,15 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     cmd.CommandText = @"UPDATE [dbo].[Applicant_Work_History]
                                         SET [Applicant] = @Applicant
-                                            ,[Company_Name] = @Company_Name
-                                            ,[Country_Code] = @Country_Code
+                                            ,[Company_Name] = @CompanyName
+                                            ,[Country_Code] = @CountryCode
                                             ,[Location] = @Location
-                                            ,[Job_Title] = @Job_Title
-                                            ,[Job_Description] = @Job_Description
-                                            ,[Start_Month] = @Start_Month
-                                            ,[Start_Year] = @Start_Year
-                                            ,[End_Month] = @End_Month
-                                            ,[End_Year] = @End_Year
+                                            ,[Job_Title] = @JobTitle
+                                            ,[Job_Description] = @JobDescription
+                                            ,[Start_Month] = @StartMonth
+                                            ,[Start_Year] = @StartYear
+                                            ,[End_Month] = @EndMonth
+                                            ,[End_Year] = @EndYear
                                         WHERE [Id] = @Id";
 
                     cmd.Parameters.AddWithValue("@Id", item.Id);
