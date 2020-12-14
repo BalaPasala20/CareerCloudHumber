@@ -10,7 +10,7 @@ namespace CareerCloud.BusinessLogicLayer
         public ValidationException(int code, string message) 
             : base (message)
         {
-            Code = code;
+            Code = code;           
         }
                
     }

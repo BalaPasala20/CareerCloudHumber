@@ -15,7 +15,7 @@ namespace CareerCloud.ADODataAccessLayer
             using (SqlConnection conn = new SqlConnection(_connectionString))
             { 
                 SqlCommand cmd = new SqlCommand();
-            cmd.Connection = conn;
+                cmd.Connection = conn;
                 foreach (ApplicantEducationPoco item in items)
                 {
                     cmd.CommandText = @"INSERT INTO [dbo].[Applicant_Educations]
