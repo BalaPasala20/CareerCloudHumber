@@ -28,7 +28,7 @@ namespace CareerCloud.BusinessLogicLayer
             List<ValidationException> exceptions = new List<ValidationException>();
             foreach (ApplicantEducationPoco poco in pocos)
             {
-                if(poco.Major.Length < 3 || string.IsNullOrEmpty(poco.Major))
+                if(string.IsNullOrEmpty(poco.Major) || poco.Major.Length < 3  )
                 {
                     exceptions.Add(new ValidationException(107, $"{poco.Id} - You did something wrong"));
                 }
