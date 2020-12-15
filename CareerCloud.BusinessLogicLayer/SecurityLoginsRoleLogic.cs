@@ -12,5 +12,13 @@ namespace CareerCloud.BusinessLogicLayer
         {
 
         }
+        //public override void Add(SecurityLoginsRolePoco[] pocos)
+        //{
+        //    base.Add(pocos);
+        //}
+        //public override void Update(SecurityLoginsRolePoco[] pocos)
+        //{
+        //    base.Update(pocos);
+        //}
     }
 }
