@@ -105,7 +105,7 @@ namespace CareerCloud.EntityFrameworkDataAccess
                     .HasConstraintName("FK_Applicant_Work_Experiences_Applicant_Profiles");
 
                 entity.HasOne(d => d.SystemCountryCode)
-                    .WithMany(p => p.ApplicantWorkExperiences)
+                    .WithMany(p => p.ApplicantWorkHistorys)
                     .HasForeignKey(d => d.CountryCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Applicant_Work_History_System_Country_Codes");

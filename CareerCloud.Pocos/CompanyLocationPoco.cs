@@ -27,5 +27,8 @@ namespace CareerCloud.Pocos
         public byte[] TimeStamp { get; set; }
 
         public virtual CompanyProfilePoco CompanyProfile { get; set; }
+        [NotMapped]
+        public virtual SystemCountryCodePoco SystemCountryCode { get; set; }
+
     }
 }
