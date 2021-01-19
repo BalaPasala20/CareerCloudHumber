@@ -71,271 +71,146 @@ namespace CareerCloud.EntityFrameworkDataAccess
                     .HasConstraintName("FK_Applicant_Profiles_Security_Logins");
             });
 
-            modelBuilder.Entity<ApplicantResume>(entity =>
+            modelBuilder.Entity<ApplicantResumePoco>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.LastUpdated).HasDefaultValueSql("(getdate())");
-
-                entity.HasOne(d => d.ApplicantNavigation)
+                entity.HasOne(d => d.ApplicantProfiles)
                     .WithMany(p => p.ApplicantResumes)
                     .HasForeignKey(d => d.Applicant)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Applicant_Resumes_Applicant_Profiles");
             });
 
-            modelBuilder.Entity<ApplicantSkill>(entity =>
+            modelBuilder.Entity<ApplicantSkillPoco>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.SkillLevel)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-
-                entity.HasOne(d => d.ApplicantNavigation)
+                entity.HasOne(d => d.ApplicantProfiles)
                     .WithMany(p => p.ApplicantSkills)
                     .HasForeignKey(d => d.Applicant)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Applicant_Skills_Applicant_Profiles");
             });
 
-            modelBuilder.Entity<ApplicantWorkHistory>(entity =>
+            modelBuilder.Entity<ApplicantWorkHistoryPoco>(entity =>
             {
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.CountryCode)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-
-                entity.HasOne(d => d.ApplicantNavigation)
-                    .WithMany(p => p.ApplicantWorkHistories)
+                entity.HasOne(d => d.ApplicantProfiles)
+                    .WithMany(p => p.ApplicantWorkExperiences)
                     .HasForeignKey(d => d.Applicant)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Applicant_Work_Experiences_Applicant_Profiles");
 
-                entity.HasOne(d => d.CountryCodeNavigation)
-                    .WithMany(p => p.ApplicantWorkHistories)
+                entity.HasOne(d => d.SystemCountryCodes)
+                    .WithMany(p => p.ApplicantWorkExperiences)
                     .HasForeignKey(d => d.CountryCode)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Applicant_Work_History_System_Country_Codes");
             });
 
-            modelBuilder.Entity<CompanyDescription>(entity =>
+            modelBuilder.Entity<CompanyDescriptionPoco>(entity =>
             {
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.LanguageId)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-
-                entity.HasOne(d => d.CompanyNavigation)
+                entity.HasOne(d => d.CompanyProfiles)
                     .WithMany(p => p.CompanyDescriptions)
                     .HasForeignKey(d => d.Company)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Company_Descriptions_Company_Profiles");
 
-                entity.HasOne(d => d.Language)
+                entity.HasOne(d => d.SystemLanguageCodes)
                     .WithMany(p => p.CompanyDescriptions)
                     .HasForeignKey(d => d.LanguageId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Company_Descriptions_System_Language_Codes");
             });
 
-            modelBuilder.Entity<CompanyJob>(entity =>
+            modelBuilder.Entity<CompanyJobPoco>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-
-                entity.HasOne(d => d.CompanyNavigation)
+                entity.HasOne(d => d.CompanyProfiles)
                     .WithMany(p => p.CompanyJobs)
                     .HasForeignKey(d => d.Company)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Company_Jobs_Company_Profiles");
             });
 
-            modelBuilder.Entity<CompanyJobEducation>(entity =>
+            modelBuilder.Entity<CompanyJobEducationPoco>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-
-                entity.HasOne(d => d.JobNavigation)
+                entity.HasOne(d => d.CompanyJobs)
                     .WithMany(p => p.CompanyJobEducations)
                     .HasForeignKey(d => d.Job)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Company_Job_Educations_Company_Jobs");
             });
 
-            modelBuilder.Entity<CompanyJobSkill>(entity =>
+            modelBuilder.Entity<CompanyJobSkillPoco>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.SkillLevel).IsUnicode(false);
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-
-                entity.HasOne(d => d.JobNavigation)
-                    .WithMany(p => p.CompanyJobSkills)
-                    .HasForeignKey(d => d.Job)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Company_Job_Skills_Company_Jobs");
+               //entity.HasOne(d => d.CompanyJobSkills)
+               //     .WithMany(p => p.)
+               //     .HasForeignKey(d => d.Job)
+               //     .OnDelete(DeleteBehavior.ClientSetNull)
+               //     .HasConstraintName("FK_Company_Job_Skills_Company_Jobs");
             });
 
-            modelBuilder.Entity<CompanyJobsDescription>(entity =>
+            modelBuilder.Entity<CompanyJobDescriptionPoco>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-
-                entity.HasOne(d => d.JobNavigation)
-                    .WithMany(p => p.CompanyJobsDescriptions)
+                entity.HasOne(d => d.CompanyJobs)
+                    .WithMany(p => p.CompanyJobDescriptions)
                     .HasForeignKey(d => d.Job)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Company_Jobs_Descriptions_Company_Jobs");
             });
 
-            modelBuilder.Entity<CompanyLocation>(entity =>
+            modelBuilder.Entity<CompanyLocationPoco>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.CountryCode)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.StateProvinceCode)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-
-                entity.Property(e => e.ZipPostalCode)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
-                entity.HasOne(d => d.CompanyNavigation)
+                entity.HasOne(d => d.CompanyProfiles)
                     .WithMany(p => p.CompanyLocations)
                     .HasForeignKey(d => d.Company)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Company_Locations_Company_Profiles");
             });
 
-            modelBuilder.Entity<CompanyProfile>(entity =>
+            modelBuilder.Entity<CompanyProfilePoco>(entity =>
             {
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.CompanyWebsite).IsUnicode(false);
-
-                entity.Property(e => e.ContactName).IsUnicode(false);
-
-                entity.Property(e => e.ContactPhone).IsUnicode(false);
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
+                
             });
 
-            modelBuilder.Entity<SecurityLogin>(entity =>
+            modelBuilder.Entity<SecurityLoginPoco>(entity =>
             {
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.EmailAddress).IsUnicode(false);
-
-                entity.Property(e => e.Login).IsUnicode(false);
-
-                entity.Property(e => e.Password).IsUnicode(false);
-
-                entity.Property(e => e.PhoneNumber).IsUnicode(false);
-
-                entity.Property(e => e.PrefferredLanguage)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
+                
             });
 
-            modelBuilder.Entity<SecurityLoginsLog>(entity =>
+            modelBuilder.Entity<SecurityLoginsLogPoco>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.SourceIp)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
-
-                entity.HasOne(d => d.LoginNavigation)
+                entity.HasOne(d => d.SecurityLogins)
                     .WithMany(p => p.SecurityLoginsLogs)
                     .HasForeignKey(d => d.Login)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Security_Logins_Log_Security_Logins");
             });
 
-            modelBuilder.Entity<SecurityLoginsRole>(entity =>
+            modelBuilder.Entity<SecurityLoginsRolePoco>(entity =>
             {
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.TimeStamp)
-                    .IsRowVersion()
-                    .IsConcurrencyToken();
-
-                entity.HasOne(d => d.LoginNavigation)
+               entity.HasOne(d => d.SecurityLogins)
                     .WithMany(p => p.SecurityLoginsRoles)
                     .HasForeignKey(d => d.Login)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Security_Logins_Roles_Security_Logins");
 
-                entity.HasOne(d => d.RoleNavigation)
-                    .WithMany(p => p.SecurityLoginsRoles)
-                    .HasForeignKey(d => d.Role)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Security_Logins_Roles_Security_Roles");
+                //entity.HasOne(d => d.SecurityRoles)
+                //    .WithMany(p => p.Role)
+                //    .HasForeignKey(d => d.Role)
+                //    .OnDelete(DeleteBehavior.ClientSetNull)
+                //    .HasConstraintName("FK_Security_Logins_Roles_Security_Roles");
             });
 
-            modelBuilder.Entity<SecurityRole>(entity =>
+            modelBuilder.Entity<SecurityRolePoco>(entity =>
             {
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.Role).IsUnicode(false);
+                
             });
 
-            modelBuilder.Entity<SystemCountryCode>(entity =>
+            modelBuilder.Entity<SystemCountryCodePoco>(entity =>
             {
-                entity.Property(e => e.Code)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                
             });
 
-            modelBuilder.Entity<SystemLanguageCode>(entity =>
+            modelBuilder.Entity<SystemLanguageCodePoco>(entity =>
             {
-                entity.HasKey(e => e.LanguageId)
-                    .HasName("PK_Culture_CultureID");
-
-                entity.Property(e => e.LanguageId)
-                    .IsUnicode(false)
-                    .IsFixedLength(true);
+                
             });
 
             base.OnModelCreating(modelBuilder);
