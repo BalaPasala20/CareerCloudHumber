@@ -44,6 +44,8 @@ namespace CareerCloud.EntityFrameworkDataAccess
         {
             modelBuilder.Entity<ApplicantEducationPoco>(entity =>
             {
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
                 entity.HasOne(d => d.ApplicantProfile)
                     .WithMany(p => p.ApplicantEducations)
                     .HasForeignKey(d => d.Applicant)
@@ -52,6 +54,8 @@ namespace CareerCloud.EntityFrameworkDataAccess
             });
             modelBuilder.Entity<ApplicantJobApplicationPoco>(entity =>
             {
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
                 entity.HasOne(d => d.ApplicantProfile)
                     .WithMany(p => p.ApplicantJobApplications)
                     .HasForeignKey(d => d.Applicant)
@@ -66,6 +70,8 @@ namespace CareerCloud.EntityFrameworkDataAccess
             });
             modelBuilder.Entity<ApplicantProfilePoco>(entity =>
             {
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
                 entity.HasOne(d => d.SystemCountryCode)
                     .WithMany(p => p.ApplicantProfiles)
                     .HasForeignKey(d => d.Country)
@@ -80,7 +86,7 @@ namespace CareerCloud.EntityFrameworkDataAccess
 
             modelBuilder.Entity<ApplicantResumePoco>(entity =>
             {
-                entity.HasOne(d => d.ApplicantProfile)
+                 entity.HasOne(d => d.ApplicantProfile)
                     .WithMany(p => p.ApplicantResumes)
                     .HasForeignKey(d => d.Applicant)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -89,6 +95,8 @@ namespace CareerCloud.EntityFrameworkDataAccess
 
             modelBuilder.Entity<ApplicantSkillPoco>(entity =>
             {
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
                 entity.HasOne(d => d.ApplicantProfile)
                     .WithMany(p => p.ApplicantSkills)
                     .HasForeignKey(d => d.Applicant)
@@ -98,6 +106,8 @@ namespace CareerCloud.EntityFrameworkDataAccess
 
             modelBuilder.Entity<ApplicantWorkHistoryPoco>(entity =>
             {
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
                 entity.HasOne(d => d.ApplicantProfile)
                     .WithMany(p => p.ApplicantWorkHistorys)
                     .HasForeignKey(d => d.Applicant)
@@ -113,6 +123,8 @@ namespace CareerCloud.EntityFrameworkDataAccess
 
             modelBuilder.Entity<CompanyDescriptionPoco>(entity =>
             {
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
                 entity.HasOne(d => d.CompanyProfile)
                     .WithMany(p => p.CompanyDescriptions)
                     .HasForeignKey(d => d.Company)
@@ -128,6 +140,8 @@ namespace CareerCloud.EntityFrameworkDataAccess
 
             modelBuilder.Entity<CompanyJobPoco>(entity =>
             {
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
                 entity.HasOne(d => d.CompanyProfile)
                     .WithMany(p => p.CompanyJobs)
                     .HasForeignKey(d => d.Company)
@@ -137,6 +151,8 @@ namespace CareerCloud.EntityFrameworkDataAccess
 
             modelBuilder.Entity<CompanyJobEducationPoco>(entity =>
             {
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
                 entity.HasOne(d => d.CompanyJob)
                     .WithMany(p => p.CompanyJobEducations)
                     .HasForeignKey(d => d.Job)
@@ -146,15 +162,19 @@ namespace CareerCloud.EntityFrameworkDataAccess
 
             modelBuilder.Entity<CompanyJobSkillPoco>(entity =>
             {
-               //entity.HasOne(d => d.CompanyJobSkills)
-               //     .WithMany(p => p.)
-               //     .HasForeignKey(d => d.Job)
-               //     .OnDelete(DeleteBehavior.ClientSetNull)
-               //     .HasConstraintName("FK_Company_Job_Skills_Company_Jobs");
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
+                entity.HasOne(d => d.CompanyJob)
+                     .WithMany(p => p.CompanyJobSkills)
+                     .HasForeignKey(d => d.Job)
+                     .OnDelete(DeleteBehavior.ClientSetNull)
+                     .HasConstraintName("FK_Company_Job_Skills_Company_Jobs");
             });
 
             modelBuilder.Entity<CompanyJobDescriptionPoco>(entity =>
             {
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
                 entity.HasOne(d => d.CompanyJob)
                     .WithMany(p => p.CompanyJobDescriptions)
                     .HasForeignKey(d => d.Job)
@@ -164,6 +184,8 @@ namespace CareerCloud.EntityFrameworkDataAccess
 
             modelBuilder.Entity<CompanyLocationPoco>(entity =>
             {
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
                 entity.HasOne(d => d.CompanyProfile)
                     .WithMany(p => p.CompanyLocations)
                     .HasForeignKey(d => d.Company)
@@ -173,12 +195,15 @@ namespace CareerCloud.EntityFrameworkDataAccess
 
             modelBuilder.Entity<CompanyProfilePoco>(entity =>
             {
-                
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
             });
 
             modelBuilder.Entity<SecurityLoginPoco>(entity =>
             {
-                
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
+
             });
 
             modelBuilder.Entity<SecurityLoginsLogPoco>(entity =>
@@ -192,17 +217,19 @@ namespace CareerCloud.EntityFrameworkDataAccess
 
             modelBuilder.Entity<SecurityLoginsRolePoco>(entity =>
             {
-               entity.HasOne(d => d.SecurityLogin)
+                entity.Property(e => e.TimeStamp)
+                    .IsRowVersion();
+                entity.HasOne(d => d.SecurityLogin)
                     .WithMany(p => p.SecurityLoginsRoles)
                     .HasForeignKey(d => d.Login)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Security_Logins_Roles_Security_Logins");
 
-                //entity.HasOne(d => d.SecurityRoles)
-                //    .WithMany(p => p.Role)
-                //    .HasForeignKey(d => d.Role)
-                //    .OnDelete(DeleteBehavior.ClientSetNull)
-                //    .HasConstraintName("FK_Security_Logins_Roles_Security_Roles");
+                entity.HasOne(d => d.SecurityRole)
+                    .WithMany(p => p.SecurityLoginsRoles)
+                    .HasForeignKey(d => d.Role)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Security_Logins_Roles_Security_Roles");
             });
 
             modelBuilder.Entity<SecurityRolePoco>(entity =>
@@ -213,11 +240,12 @@ namespace CareerCloud.EntityFrameworkDataAccess
             modelBuilder.Entity<SystemCountryCodePoco>(entity =>
             {
                 
+
             });
 
             modelBuilder.Entity<SystemLanguageCodePoco>(entity =>
             {
-                
+               
             });
 
             base.OnModelCreating(modelBuilder);
