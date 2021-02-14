@@ -28,7 +28,21 @@ namespace CareerCloud.BusinessLogicLayer
             List<ValidationException> exceptions = new List<ValidationException>();
             foreach (CompanyProfilePoco poco in pocos)
             {
-                if(string.IsNullOrEmpty(poco.CompanyWebsite) || !poco.CompanyWebsite.EndsWith(".ca") | !poco.CompanyWebsite.EndsWith(".com") | !poco.CompanyWebsite.EndsWith(".biz"))
+                //if(string.IsNullOrEmpty(poco.CompanyWebsite) && !poco.CompanyWebsite.EndsWith(".ca") || !poco.CompanyWebsite.EndsWith(".com") || !poco.CompanyWebsite.EndsWith(".biz"))
+                //{
+                //    exceptions.Add(new ValidationException(600, $"{poco.Id} - Invalid website"));
+                //}
+                if(!string.IsNullOrEmpty(poco.CompanyWebsite))
+                {
+                    if (poco.CompanyWebsite.EndsWith(".ca") || poco.CompanyWebsite.EndsWith(".com") || poco.CompanyWebsite.EndsWith(".biz"))
+                    {
+                    }
+                    else
+                    {
+                        exceptions.Add(new ValidationException(600, $"{poco.Id} - Invalid website"));
+                    }
+                }
+                else
                 {
                     exceptions.Add(new ValidationException(600, $"{poco.Id} - Invalid website"));
                 }
