@@ -12,23 +12,23 @@ using System.Web.Http.Description;
 
 namespace CareerCloud.WebAPI.Controllers
 {
-    [Route("api/careercloud/applicant/v1")]
+    [Route("api/careercloud/company/v1")]
     [ApiController]
-    public class ApplicantWorkHistoryController : ControllerBase
+    public class CompanyJobSkillController : ControllerBase
     {
-        private readonly ApplicantWorkHistoryLogic _logic;
+        private readonly CompanyJobSkillLogic _logic;
 
-        public ApplicantWorkHistoryController()
+        public CompanyJobSkillController()
         {
-            EFGenericRepository<ApplicantWorkHistoryPoco> repo = new EFGenericRepository<ApplicantWorkHistoryPoco>();
-            _logic = new ApplicantWorkHistoryLogic(repo);
+            EFGenericRepository<CompanyJobSkillPoco> repo = new EFGenericRepository<CompanyJobSkillPoco>();
+            _logic = new CompanyJobSkillLogic(repo);
         }
         [HttpGet]
-        [Route("workhistory/{applicantWorkHistoryId}")]
-        [ResponseType(typeof(ApplicantWorkHistoryPoco))]
-        public ActionResult GetApplicantWorkHistory(Guid applicantWorkHistoryId)
+        [Route("jobskill/{skillId}")]
+        [ResponseType(typeof(CompanyJobSkillPoco))]
+        public ActionResult GetCompanyJobSkill(Guid skillId)
         {
-            ApplicantWorkHistoryPoco poco = _logic.Get(applicantWorkHistoryId);
+            CompanyJobSkillPoco poco = _logic.Get(skillId);
             if (poco == null)
             {
                 return NotFound();
@@ -36,11 +36,11 @@ namespace CareerCloud.WebAPI.Controllers
             return Ok(poco);
         }
         [HttpGet]
-        [Route("workhistory")]
-        [ResponseType(typeof(List<ApplicantWorkHistoryPoco>))]
-        public ActionResult GetAllApplicantWorkHistory()
+        [Route("jobskill")]
+        [ResponseType(typeof(List<CompanyJobSkillPoco>))]
+        public ActionResult GetAllCompanyJobSkill()
         {
-            List<ApplicantWorkHistoryPoco> pocos = _logic.GetAll();
+            List<CompanyJobSkillPoco> pocos = _logic.GetAll();
             if (pocos == null)
             {
                 return NotFound();
@@ -48,8 +48,8 @@ namespace CareerCloud.WebAPI.Controllers
             return Ok(pocos);
         }
         [HttpPost]
-        [Route("workhistory")]
-        public ActionResult PostApplicantWorkHistory([FromBody] ApplicantWorkHistoryPoco[] pocos)
+        [Route("jobskill")]
+        public ActionResult PostCompanyJobSkill([FromBody] CompanyJobSkillPoco[] pocos)
         {
             try
             {
@@ -66,8 +66,8 @@ namespace CareerCloud.WebAPI.Controllers
             }
         }
         [HttpPut]
-        [Route("workhistory")]
-        public ActionResult PutApplicantWorkHistory([FromBody] ApplicantWorkHistoryPoco[] pocos)
+        [Route("jobskill")]
+        public ActionResult PutCompanyJobSkill([FromBody] CompanyJobSkillPoco[] pocos)
         {
             try
             {
@@ -84,12 +84,11 @@ namespace CareerCloud.WebAPI.Controllers
             }
         }
         [HttpDelete]
-        [Route("workhistory")]
-        public ActionResult DeleteApplicantWorkHistory([FromBody] ApplicantWorkHistoryPoco[] pocos)
+        [Route("jobskill")]
+        public ActionResult DeleteCompanyJobSkill([FromBody] CompanyJobSkillPoco[] pocos)
         {
             _logic.Delete(pocos);
             return Ok();
         }
     }
 }
-
