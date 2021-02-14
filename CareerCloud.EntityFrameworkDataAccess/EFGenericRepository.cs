@@ -10,7 +10,7 @@ namespace CareerCloud.EntityFrameworkDataAccess
 {
     public class EFGenericRepository<T> : IDataRepository<T> where T : class
     {
-        private CareerCloudContext _context;
+        private readonly CareerCloudContext _context;
 
         public EFGenericRepository()
         {
