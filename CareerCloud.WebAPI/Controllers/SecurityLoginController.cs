@@ -12,23 +12,23 @@ using System.Web.Http.Description;
 
 namespace CareerCloud.WebAPI.Controllers
 {
-    [Route("api/careercloud/company/v1")]
+    [Route("api/careercloud/security/v1")]
     [ApiController]
-    public class CompanyJobsDescriptionController : ControllerBase
+    public class SecurityLoginController : ControllerBase
     {
-        private readonly CompanyJobDescriptionLogic _logic;
+        private readonly SecurityLoginLogic _logic;
 
-        public CompanyJobsDescriptionController()
+        public SecurityLoginController()
         {
-            EFGenericRepository<CompanyJobDescriptionPoco> repo = new EFGenericRepository<CompanyJobDescriptionPoco>();
-            _logic = new CompanyJobDescriptionLogic(repo);
+            EFGenericRepository<SecurityLoginPoco> repo = new EFGenericRepository<SecurityLoginPoco>();
+            _logic = new SecurityLoginLogic(repo);
         }
         [HttpGet]
-        [Route("description/{companyJobId}")]
-        [ResponseType(typeof(CompanyJobDescriptionPoco))]
-        public ActionResult GetCompanyJobsDescription(Guid companyJobId)
+        [Route("login/{loginId}")]
+        [ResponseType(typeof(SecurityLoginPoco))]
+        public ActionResult GetSecurityLogin(Guid loginId)
         {
-            CompanyJobDescriptionPoco poco = _logic.Get(companyJobId);
+            SecurityLoginPoco poco = _logic.Get(loginId);
             if (poco == null)
             {
                 return NotFound();
@@ -36,11 +36,11 @@ namespace CareerCloud.WebAPI.Controllers
             return Ok(poco);
         }
         [HttpGet]
-        [Route("description")]
-        [ResponseType(typeof(List<CompanyJobDescriptionPoco>))]
-        public ActionResult GetAllCompanyJobsDescription()
+        [Route("login")]
+        [ResponseType(typeof(List<SecurityLoginPoco>))]
+        public ActionResult GetAllSecurityLogin()
         {
-            List<CompanyJobDescriptionPoco> pocos = _logic.GetAll();
+            List<SecurityLoginPoco> pocos = _logic.GetAll();
             if (pocos == null)
             {
                 return NotFound();
@@ -48,8 +48,8 @@ namespace CareerCloud.WebAPI.Controllers
             return Ok(pocos);
         }
         [HttpPost]
-        [Route("description")]
-        public ActionResult PostCompanyJobsDescription([FromBody] CompanyJobDescriptionPoco[] pocos)
+        [Route("login")]
+        public ActionResult PostSecurityLogin([FromBody] SecurityLoginPoco[] pocos)
         {
             try
             {
@@ -66,8 +66,8 @@ namespace CareerCloud.WebAPI.Controllers
             }
         }
         [HttpPut]
-        [Route("description")]
-        public ActionResult PutCompanyJobsDescription([FromBody] CompanyJobDescriptionPoco[] pocos)
+        [Route("login")]
+        public ActionResult PutSecurityLogin([FromBody] SecurityLoginPoco[] pocos)
         {
             try
             {
@@ -84,8 +84,8 @@ namespace CareerCloud.WebAPI.Controllers
             }
         }
         [HttpDelete]
-        [Route("description")]
-        public ActionResult DeleteCompanyJobsDescription([FromBody] CompanyJobDescriptionPoco[] pocos)
+        [Route("login")]
+        public ActionResult DeleteSecurityLogin([FromBody] SecurityLoginPoco[] pocos)
         {
             _logic.Delete(pocos);
             return Ok();
